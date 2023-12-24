@@ -22,23 +22,22 @@ var daysMap = new Dictionary<ushort, AoC>
 while (true)
 {
     Console.WriteLine("Which day would you like to run? (Choose a number 1-25 or type 'q' to quit)");
-    try
+    var input = Console.ReadLine();
+
+    if (input == "q") break;
+
+    if (ushort.TryParse(input, out var day))
     {
-        var input = Console.ReadLine();
-        
-        if (input == "q") break;
-        
-        var day = Convert.ToUInt16(input);
         if (day > 25)
         {
             Console.WriteLine("\nThat day is bigger than 25");
             return;
         }
-    
+
         // TODO: Remove the GetValueOrDefault once you have all the solutions
         daysMap.GetValueOrDefault(day)?.Run();
     }
-    catch (Exception ex) when (ex is OverflowException or FormatException)
+    else
     {
         Console.WriteLine("\nThat is not a valid input");
     }
